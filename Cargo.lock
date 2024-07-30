@@ -69,5 +69,9 @@ name = "scratchcards"
 version = "0.1.0"
 
 [[package]]
+name = "seed_fertilizer"
+version = "0.1.0"
+
+[[package]]
 name = "trebuchet"
 version = "0.1.0"
