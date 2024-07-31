@@ -1,3 +1,4 @@
+use rayon::prelude::*;
 use std::io::prelude::*;
 use std::{io, usize};
 
@@ -65,10 +66,15 @@ fn main() {
     println!("lowest location = {}", lowest_location.unwrap());
 
     assert!(seeds.len() % 2 == 0);
-    let lowest_location2 = seeds
+
+    let seeds: Vec<usize> = seeds
         .chunks(2)
         .flat_map(|seeds| (seeds[0]..seeds[0] + seeds[1]))
-        .map(|s| convert(s, &seed_to_soil))
+        .collect();
+
+    let lowest_location2 = seeds
+        .par_iter()
+        .map(|&s| convert(s, &seed_to_soil))
         .map(|s| convert(s, &soil_to_fertilizer))
         .map(|f| convert(f, &fertilizer_to_water))
         .map(|w| convert(w, &water_to_ligth))
